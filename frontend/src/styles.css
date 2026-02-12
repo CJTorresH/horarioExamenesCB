@@ -1,0 +1,14 @@
+:root{font-family:Inter,system-ui,sans-serif;background:#fff;color:#222}
+body{margin:0;background:#f5f6f8}
+.navbar{background:#8a1e11;color:#fff;padding:14px 20px;font-weight:700}
+.page{padding:16px}
+.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.row{display:flex;gap:8px;align-items:center}
+input,select,button{padding:8px;border-radius:8px;border:1px solid #d0d0d0}
+button{background:#8a1e11;color:#fff;border:none;cursor:pointer}
+.item{padding:10px;border-bottom:1px solid #eee;cursor:pointer}
+.calendar-layout{display:grid;grid-template-columns:320px 1fr;gap:12px}
+.draggable-subject{padding:8px;background:#f7f7f7;border-radius:8px;margin:6px 0;cursor:grab}
+.toolbar{display:flex;gap:8px;margin-bottom:8px}
+.login{max-width:320px;margin:50px auto;background:#fff;padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+@media (max-width:900px){.calendar-layout{grid-template-columns:1fr}}
