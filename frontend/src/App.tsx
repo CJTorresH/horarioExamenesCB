@@ -28,7 +28,6 @@ export default function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/calendars/:id' element={<CalendarPage />} />
-        <Route path='/calendar/:id' element={<CalendarPage />} />
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </div>

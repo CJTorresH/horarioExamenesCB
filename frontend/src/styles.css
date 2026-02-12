@@ -12,6 +12,3 @@ button{background:#8a1e11;color:#fff;border:none;cursor:pointer}
 .toolbar{display:flex;gap:8px;margin-bottom:8px}
 .login{max-width:320px;margin:50px auto;background:#fff;padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
 @media (max-width:900px){.calendar-layout{grid-template-columns:1fr}}
-
-.calendar-link{display:block;padding:10px;border:1px solid #e5e7eb;border-radius:8px;margin-top:8px;text-decoration:none;color:#1f2937;background:#fff;transition:all .2s ease}
-.calendar-link:hover{border-color:#8a1e11;background:#fff5f3;color:#8a1e11;transform:translateY(-1px)}

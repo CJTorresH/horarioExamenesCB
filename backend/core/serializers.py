@@ -52,27 +52,3 @@ class ExamCalendarSerializer(serializers.ModelSerializer):
         model = ExamCalendar
         fields = '__all__'
         read_only_fields = ['created_by', 'created_at', 'updated_at']
-        extra_kwargs = {
-            'start_date': {'required': False},
-            'end_date': {'required': False},
-        }
-
-    def validate(self, attrs):
-        import datetime
-
-        start_date = attrs.get('start_date')
-        end_date = attrs.get('end_date')
-
-        if start_date and not end_date:
-            attrs['end_date'] = start_date + datetime.timedelta(days=27)
-        elif end_date and not start_date:
-            attrs['start_date'] = end_date - datetime.timedelta(days=27)
-        elif not start_date and not end_date:
-            today = datetime.date.today()
-            attrs['start_date'] = today
-            attrs['end_date'] = today + datetime.timedelta(days=27)
-
-        if attrs['start_date'] > attrs['end_date']:
-            raise serializers.ValidationError('La fecha de inicio no puede ser mayor a la fecha de fin.')
-
-        return attrs
