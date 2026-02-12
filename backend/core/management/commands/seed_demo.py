@@ -23,8 +23,8 @@ class Command(BaseCommand):
             ('Mecánica y Calor', 'SEM4', True, []),
             ('Cálculo I', 'SEM2', True, []),
             ('Álgebra Lineal', 'SEM2', True, []),
-            ('Asignatura Abierta X', 'OPEN', False, []),
-            ('Solo Sábados', 'OPEN', False, ['Saturday']),
+            ('Asignatura Extra X', 'EXTRA', False, []),
+            ('Solo Sábados', 'EXTRA', False, ['Saturday']),
         ]
         map_subject = {}
         for name, group, heavy, weekdays in subjects:

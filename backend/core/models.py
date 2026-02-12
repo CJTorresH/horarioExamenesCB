@@ -6,7 +6,7 @@ class Subject(models.Model):
     class SemesterGroup(models.TextChoices):
         SEM2 = 'SEM2', '2do semestre'
         SEM4 = 'SEM4', '4to semestre'
-        OPEN = 'OPEN', 'Abiertas'
+        EXTRA = 'EXTRA', 'Extra'
 
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=40, blank=True)

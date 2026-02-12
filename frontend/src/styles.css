@@ -1,6 +1,7 @@
 :root{font-family:Inter,system-ui,sans-serif;background:#fff;color:#222}
 body{margin:0;background:#f5f6f8}
 .navbar{background:#8a1e11;color:#fff;padding:14px 20px;font-weight:700}
+.navbar-logo{height:48px;max-width:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 6px rgba(255,255,255,.6)) drop-shadow(0 0 12px rgba(255,255,255,.35))}
 .page{padding:16px}
 .card{background:#fff;border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .row{display:flex;gap:8px;align-items:center}
@@ -8,7 +9,20 @@ input,select,button{padding:8px;border-radius:8px;border:1px solid #d0d0d0}
 button{background:#8a1e11;color:#fff;border:none;cursor:pointer}
 .item{padding:10px;border-bottom:1px solid #eee;cursor:pointer}
 .calendar-layout{display:grid;grid-template-columns:320px 1fr;gap:12px}
-.draggable-subject{padding:8px;background:#f7f7f7;border-radius:8px;margin:6px 0;cursor:grab}
+.draggable-subject{padding:8px;background:#f7f7f7;border-radius:8px;margin:6px 0;cursor:grab;user-select:none;-webkit-user-select:none}
+.draggable-subject:active{cursor:grabbing}
+.subject-heavy{font-weight:700;color:#b00020}
 .toolbar{display:flex;gap:8px;margin-bottom:8px}
 .login{max-width:320px;margin:50px auto;background:#fff;padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.fc .blocked-day-cell{background:#b5b5b5 !important}
+.fc .out-of-range-day-cell{background:#d0d0d0}
+.fc .event-heavy .fc-event-title{font-weight:700;color:#b00020}
+.fc .feriado-badge{margin-left:6px;padding:1px 6px;border-radius:999px;background:#6f6f6f;color:#fff;font-size:10px;font-weight:700}
+.fc .week-row-compact{height:16px !important}
+.fc .week-row-compact > td{height:16px !important;padding-top:0 !important;padding-bottom:0 !important}
+.fc .week-row-compact .fc-daygrid-day-frame{min-height:16px !important;height:16px !important;padding:0 !important;overflow:hidden}
+.fc .week-row-compact .fc-daygrid-day-top{min-height:0 !important;line-height:1}
+.fc .week-row-compact .fc-daygrid-day-number{font-size:9px !important;opacity:.45;padding:0 2px !important}
+.fc .week-row-compact .fc-daygrid-day-events{display:none !important;min-height:0 !important;margin:0 !important}
+.fc .week-row-compact .fc-daygrid-event-harness{display:none !important}
 @media (max-width:900px){.calendar-layout{grid-template-columns:1fr}}

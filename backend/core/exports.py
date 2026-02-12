@@ -9,6 +9,16 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 
 from .models import ExamCalendar
 
+WEEKDAY_LABELS_ES = {
+    'Monday': 'Lunes',
+    'Tuesday': 'Martes',
+    'Wednesday': 'Miércoles',
+    'Thursday': 'Jueves',
+    'Friday': 'Viernes',
+    'Saturday': 'Sábado',
+    'Sunday': 'Domingo',
+}
+
 
 def build_calendar_rows(calendar: ExamCalendar, snapshot=None):
     if snapshot:
@@ -19,12 +29,15 @@ def build_calendar_rows(calendar: ExamCalendar, snapshot=None):
         rows = []
         for e in events:
             s = subjects[e['subject_id']]
-            day_name = __import__('datetime').date.fromisoformat(e['date']).strftime('%A')
+            day_name_en = __import__('datetime').date.fromisoformat(e['date']).strftime('%A')
+            day_name = WEEKDAY_LABELS_ES.get(day_name_en, day_name_en)
             rows.append((e['date'], day_name, s.name, s.semester_group, 'Sí' if s.is_heavy else 'No'))
         return rows, blocked
     rows = []
     for event in calendar.events.select_related('subject').order_by('date', 'subject__name'):
-        rows.append((event.date.isoformat(), event.date.strftime('%A'), event.subject.name, event.subject.semester_group, 'Sí' if event.subject.is_heavy else 'No'))
+        day_name_en = event.date.strftime('%A')
+        day_name = WEEKDAY_LABELS_ES.get(day_name_en, day_name_en)
+        rows.append((event.date.isoformat(), day_name, event.subject.name, event.subject.semester_group, 'Sí' if event.subject.is_heavy else 'No'))
     blocked = {b.date.isoformat(): b.reason for b in calendar.blocked_days.all()}
     return rows, blocked
 

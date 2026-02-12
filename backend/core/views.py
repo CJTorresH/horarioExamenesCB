@@ -1,7 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
+from django.db import IntegrityError
 from django.db.models import Max
+from django.db.models.deletion import ProtectedError
 from django.http import FileResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -20,6 +24,7 @@ from .serializers import (
 from .services import build_snapshot, validate_exam_assignment
 
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
 
@@ -37,6 +42,7 @@ class LogoutView(APIView):
         return Response({'detail': 'Sesión cerrada'})
 
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class MeView(APIView):
     def get(self, request):
         return Response(UserSerializer(request.user).data)
@@ -45,6 +51,17 @@ class MeView(APIView):
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all().order_by('name')
     serializer_class = SubjectSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        try:
+            self.perform_destroy(instance)
+        except (ProtectedError, IntegrityError):
+            return Response(
+                {'detail': 'No se puede eliminar la materia porque está siendo utilizada por otros registros.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class RuleViewSet(viewsets.ModelViewSet):
@@ -136,6 +153,13 @@ class ExamCalendarViewSet(viewsets.ModelViewSet):
         for e in snapshot.get('events', []):
             ExamEvent.objects.create(calendar=calendar, subject_id=e['subject_id'], date=e['date'])
         return Response({'detail': 'Versión restaurada'})
+
+    @action(detail=True, methods=['delete'], url_path='versions/(?P<version_id>[^/.]+)')
+    def delete_version(self, request, pk=None, version_id=None):
+        calendar = self.get_object()
+        version = CalendarVersion.objects.get(id=version_id, calendar=calendar)
+        version.delete()
+        return Response(status=204)
 
     @action(detail=True, methods=['get'], url_path='export/excel')
     def export_excel_action(self, request, pk=None):

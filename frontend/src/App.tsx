@@ -24,7 +24,13 @@ export default function App() {
 
   return (
     <div>
-      <nav className='navbar'>FIUNA – Planificador de Exámenes (Ciencias Básicas)</nav>
+      <nav className='navbar'>
+        <img
+          className='navbar-logo'
+          src='https://www.ing.una.py/FIUNA3/wp-content/uploads/2024/08/logo_FIUNA_horizontal_transp.png'
+          alt='FIUNA'
+        />
+      </nav>
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/calendars/:id' element={<CalendarPage />} />
